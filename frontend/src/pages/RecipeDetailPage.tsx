@@ -7,6 +7,7 @@ import { Breadcrumb } from "../components/Breadcrumb";
 import { recordRecipeView } from "../utils/personalization";
 import { isRecipeFavorited, toggleRecipeFavorite } from "../utils/favorites";
 import { OptimizedImage } from "../components/OptimizedImage";
+import { setupPageSEO } from "../utils/seo";
 
 interface Props {
   slug: string;
@@ -20,6 +21,20 @@ export function RecipeDetailPage({ slug }: Props) {
     if (recipe) {
       recordRecipeView(recipe.id);
       setFav(isRecipeFavorited(recipe.id));
+      
+      // Setup SEO for this recipe page
+      setupPageSEO({
+        path: `/recipes/${recipe.slug}`,
+        title: `${recipe.title} - IslandFruitGuide Recipe`,
+        description: recipe.description,
+        image: recipe.image_url,
+        type: 'article',
+        breadcrumbs: [
+          { name: 'Home', url: '/' },
+          { name: 'Recipes', url: '/recipes' },
+          { name: recipe.title, url: `/recipes/${recipe.slug}` }
+        ]
+      });
     }
   }, [recipe]);
 

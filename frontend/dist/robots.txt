@@ -1,0 +1,45 @@
+# IslandFruitGuide.com — Robots.txt
+# Last updated: 2025-06-14
+
+User-agent: *
+Allow: /
+
+# Block transactional/utility pages from indexing
+Disallow: /checkout/
+Disallow: /quiz/results
+Disallow: /dashboard
+Disallow: /login
+Disallow: /register
+Disallow: /sitemap-viewer
+
+# Allow all CSS/JS for proper rendering
+Allow: /assets/
+
+# Sitemaps
+Sitemap: https://www.islandfruitguide.com/sitemap_index.xml
+Sitemap: https://www.islandfruitguide.com/sitemap.xml
+
+# Crawl-delay (optional, helps with rate limiting)
+Crawl-delay: 1
+
+# AI crawlers — welcome for AEO
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+# Preconnect hint for Supabase CDN
+# Host: https://raguzwxnrdanynjnppze.supabase.co

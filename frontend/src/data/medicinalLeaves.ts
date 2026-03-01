@@ -275,7 +275,7 @@ export const medicinalLeaves: MedicinalLeaf[] = [
       "Anticoagulants",
       "Mango / urushiol allergy (related to poison ivy)"
     ],
-    image_id: null,
+    image_id: "https://raguzwxnrdanynjnppze.supabase.co/storage/v1/object/public/fruitleaf-images/fruitleaf-mango-leaf.png",
     source_notes: "Traditional Ayurvedic medicine and Caribbean folk use. Mango allergy connection documented via urushiol cross-reactivity (Anacardiaceae family).",
     slug: "mango-leaf",
     fruit_id: "5",

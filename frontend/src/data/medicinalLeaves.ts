@@ -228,7 +228,7 @@ export const medicinalLeaves: MedicinalLeaf[] = [
       "Platelet medications",
       "Latex allergy cross-reactivity"
     ],
-    image_id: null,
+    image_id: "https://raguzwxnrdanynjnppze.supabase.co/storage/v1/object/public/fruitleaf-images/fruitleaf-papaya-leaf.png",
     source_notes: "Emerging clinical research on papaya leaf and platelet support. Traditional Caribbean and South Asian ethnobotany. Culinary use of papain for tenderizing is well-established.",
     slug: "papaya-leaf",
     fruit_id: "8",

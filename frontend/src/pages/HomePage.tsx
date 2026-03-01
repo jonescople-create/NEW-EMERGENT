@@ -7,6 +7,7 @@ import { FruitCard } from "../components/FruitCard";
 import { RecipeCard } from "../components/RecipeCard";
 import { getRecentState } from "../utils/personalization";
 import { OptimizedImage } from "../components/OptimizedImage";
+import { setupPageSEO } from "../utils/seo";
 
 const HERO_BANNER = "https://raguzwxnrdanynjnppze.supabase.co/storage/v1/object/public/brand-assets/banner-hero.webp";
 const MANGO_IMG = "https://raguzwxnrdanynjnppze.supabase.co/storage/v1/object/public/fruit-images/fruit-mango.jpg";
@@ -17,6 +18,17 @@ export function HomePage() {
   const [showResults, setShowResults] = useState(false);
   const [recentFruits, setRecentFruits] = useState<typeof fruits>([]);
   const [recentRecipes, setRecentRecipes] = useState<typeof recipes>([]);
+
+  useEffect(() => {
+    // Setup SEO for homepage
+    setupPageSEO({
+      path: '/',
+      title: 'IslandFruitGuide - Your Complete Caribbean & Tropical Fruit Encyclopedia',
+      description: 'Discover 62+ Caribbean and tropical fruits with complete guides, authentic recipes, health benefits, growing tips, and cultural history. From ackee to soursop - your ultimate tropical fruit resource.',
+      image: HERO_BANNER,
+      type: 'website'
+    });
+  }, []);
 
   const handleSearch = (q: string) => {
     setSearchQuery(q);

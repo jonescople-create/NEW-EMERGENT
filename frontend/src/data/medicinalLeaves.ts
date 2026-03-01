@@ -369,7 +369,7 @@ export const medicinalLeaves: MedicinalLeaf[] = [
       "Anticoagulants",
       "Alcohol (hard block)"
     ],
-    image_id: null,
+    image_id: "https://raguzwxnrdanynjnppze.supabase.co/storage/v1/object/public/fruitleaf-images/fruitleaf-passion-fruit-leaf.png",
     source_notes: "Passiflora leaf sedative properties documented in clinical literature. Traditional Caribbean and South American use. Chrysin and vitexin GABA-receptor activity research.",
     slug: "passion-fruit-leaf",
     fruit_id: "6",

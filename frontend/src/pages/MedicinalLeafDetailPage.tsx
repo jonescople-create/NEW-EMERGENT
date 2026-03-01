@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { navigate } from "../App";
 import {
   getLeafBySlug,
@@ -9,10 +9,29 @@ import {
 import { fruits, getFruitById } from "../data/fruits";
 import { Breadcrumb } from "../components/Breadcrumb";
 import { OptimizedImage } from "../components/OptimizedImage";
+import { setupPageSEO } from "../utils/seo";
 
 export function MedicinalLeafDetailPage({ slug }: { slug: string }) {
   const leaf = getLeafBySlug(slug);
   const [activeTab, setActiveTab] = useState<"overview" | "preparation" | "compatibility" | "safety">("overview");
+
+  useEffect(() => {
+    if (leaf) {
+      // Setup SEO for this medicinal leaf page
+      setupPageSEO({
+        path: `/medicinal-leaves/${leaf.slug}`,
+        title: `${leaf.common_name} - ${leaf.seo_title} | IslandFruitGuide`,
+        description: leaf.seo_description,
+        image: leaf.image_id || undefined,
+        type: 'article',
+        breadcrumbs: [
+          { name: 'Home', url: '/' },
+          { name: 'Medicinal Leaves', url: '/medicinal-leaves' },
+          { name: leaf.common_name, url: `/medicinal-leaves/${leaf.slug}` }
+        ]
+      });
+    }
+  }, [leaf]);
 
   if (!leaf) {
     return (

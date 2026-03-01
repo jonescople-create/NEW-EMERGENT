@@ -248,10 +248,10 @@ function LeafCard({ leaf, parentFruit }: { leaf: MedicinalLeaf; parentFruit: typ
       {/* Image or Icon */}
       <div className="bg-gradient-to-br from-leaf/10 to-mango/10 dark:from-leaf/20 dark:to-mango/20 p-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          {parentFruit?.image_url ? (
+          {leaf.image_id ? (
             <OptimizedImage
-              src={parentFruit.image_url}
-              alt={`${leaf.common_name} — IslandFruitGuide`}
+              src={leaf.image_id}
+              alt={`${leaf.common_name} — Caribbean medicinal leaf — IslandFruitGuide`}
               width={56}
               height={56}
               className="w-14 h-14 rounded-full object-cover border-2 border-white dark:border-gray-700 shadow-sm"

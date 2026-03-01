@@ -421,7 +421,7 @@ export const medicinalLeaves: MedicinalLeaf[] = [
       "Antihypertensive medications",
       "Pet safety concern (toxic to animals — not for human topical use around pets)"
     ],
-    image_id: null,
+    image_id: "https://raguzwxnrdanynjnppze.supabase.co/storage/v1/object/public/fruitleaf-images/fruitleaf-avacado-leaf.png",
     source_notes: "Avocado persin toxicology documented in veterinary literature. West Indian vs Guatemalan variety distinction from USDA botanical records. Traditional Mexican culinary use of avocado leaves is well-established.",
     slug: "avocado-leaf",
     fruit_id: "19",

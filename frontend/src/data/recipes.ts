@@ -577,6 +577,132 @@ export const recipes: Recipe[] = [
     servings: 4,
     difficulty: "Easy",
     description: "Classic Jamaican banana porridge made with cornmeal and coconut milk — creamy, warming, and naturally energizing."
+  },
+  {
+    id: "r19",
+    title: "Papaya-Passion-Guava Elixir (Island Trio)",
+    ingredients: [
+      "3 cups ripe papaya, peeled & diced (~450 g)",
+      "1 cup guava flesh, chopped, seeds removed if possible (~180 g)",
+      "Pulp of 6 passion fruits (about ½ cup / scoop the seeds & juice)",
+      "½ cup coconut water or cold water (120 ml)",
+      "Juice of 1 lime (≈ 30 ml)",
+      "2 tbsp honey or agave (≈ 30 ml) — adjust to taste",
+      "1 cup ice (about 8–10 cubes)",
+      "Pinch of fine sea salt (optional — brightens flavor)",
+      "Optional: 1 small knob fresh ginger (2–3 mm slice) for a spicy kick",
+      "Optional: fresh mint for garnish",
+      "Optional: 30–45 ml white rum for cocktail version"
+    ],
+    instructions: [
+      "Prep fruit: peel, seed and chop papaya. Halve guavas and scoop out flesh; press through a sieve or pick out big seeds (guava seeds are edible but grainy). Halve passion fruits and scoop pulp into a bowl.",
+      "Add to blender in this order: papaya, guava, passion fruit pulp, coconut water, lime juice, honey, and a pinch of salt.",
+      "Blend on high until completely smooth (about 45–60 seconds). Stop, taste, and adjust: more honey for sweetness, more lime for acidity, or a splash more water for a thinner consistency.",
+      "If you prefer a seed-free, silky juice: pour the blended mixture through a fine mesh strainer into a pitcher, pressing with the back of a spoon. (If you like texture, skip straining.)",
+      "Add ice to the pitcher or return strained juice + ice to the blender and pulse once to chill and slightly froth.",
+      "Serve cold over ice, garnish with a lime wheel and mint. If making cocktails, add rum at the serving stage and stir gently."
+    ],
+    related_fruit_ids: ["8", "6", "10"],
+    image_url: "https://customer-assets.emergentagent.com/job_zip-site-clone/artifacts/5pje2lfc_ChatGPT%20Image%20Mar%201%2C%202026%2C%2004_44_55%20PM.png",
+    slug: "papaya-passion-guava-elixir",
+    prep_time: "15 min",
+    cook_time: "5 min",
+    servings: 4,
+    difficulty: "Easy",
+    description: "Bright, tropical, and balanced — papaya's creaminess, passion fruit's tang, and guava's floral sweetness come together in this refreshing Island Trio elixir."
+  },
+  {
+    id: "r20",
+    title: "Lychee Lime Cooler",
+    ingredients: [
+      "2 cups fresh lychees, peeled and pitted",
+      "1 cup cold coconut water",
+      "Juice of 2 fresh limes (about ¼ cup)",
+      "1–2 tbsp honey or agave syrup (to taste)",
+      "1 cup ice",
+      "Small pinch of sea salt (optional but recommended)",
+      "Optional: fresh mint leaves",
+      "Optional: thin slices of cucumber (cooling effect)",
+      "Optional: sparkling water (to top)"
+    ],
+    instructions: [
+      "Add lychees, coconut water, lime juice, sweetener, salt, and ice to a blender.",
+      "Blend on high for 45 seconds until smooth and pale pearly-pink.",
+      "Taste and adjust sweetness or acidity.",
+      "Strain if desired for a clear, juice-style finish.",
+      "Serve over ice, garnish with mint or lime wheel."
+    ],
+    related_fruit_ids: ["24"],
+    image_url: `${SUPABASE_STORAGE}/recipe-images/recipe-lychee-lime-cooler.jpeg`,
+    slug: "lychee-lime-cooler",
+    prep_time: "10 min",
+    cook_time: "0 min",
+    servings: 4,
+    difficulty: "Easy",
+    description: "Light, floral, and ultra-refreshing lychee drink with bright citrus finish — perfect for hot climates and hydration."
+  },
+  {
+    id: "r21",
+    title: "Dragon Fruit Coconut Refresher",
+    ingredients: [
+      "2 cups ripe dragon fruit (pink or white flesh), cubed",
+      "1 cup coconut milk (light) or coconut water",
+      "Juice of 1 lime",
+      "1 tbsp honey or agave (optional)",
+      "1 cup ice",
+      "Optional: ¼ banana (for extra creaminess)",
+      "Optional: chia seeds (nutrient boost)",
+      "Optional: vanilla extract (¼ tsp)"
+    ],
+    instructions: [
+      "Place dragon fruit, coconut liquid, lime juice, sweetener, and ice into blender.",
+      "Blend until creamy and evenly colored (45–60 seconds).",
+      "Adjust thickness with more coconut water if needed.",
+      "Serve immediately in clear glasses to showcase color."
+    ],
+    related_fruit_ids: ["18"],
+    image_url: `${SUPABASE_STORAGE}/recipe-images/recipe-dragon-fruit-refresher.jpeg`,
+    slug: "dragon-fruit-coconut-refresher",
+    prep_time: "10 min",
+    cook_time: "0 min",
+    servings: 4,
+    difficulty: "Easy",
+    description: "Smooth, mildly sweet, and visually striking dragon fruit drink with creamy coconut body and soft citrus lift."
+  },
+  {
+    id: "r22",
+    title: "Lychee Dragon Fruit Splash",
+    ingredients: [
+      "1½ cups fresh dragon fruit (pink or white flesh), diced",
+      "1¼ cups peeled, pitted lychees (fresh or canned in juice, drained)",
+      "¾ cup cold coconut water (or filtered water)",
+      "Juice of 1 small lime (about 2 tbsp)",
+      "1–2 tbsp honey or agave syrup (to taste)",
+      "1 cup ice cubes",
+      "Pinch of sea salt (optional, enhances sweetness)",
+      "Optional: 4–5 fresh mint leaves (extra refreshing)",
+      "Optional: ½ tsp rose water (luxury floral note)",
+      "Optional: sparkling water (to top, for a fizzy version)",
+      "Optional: white rum or vodka (30–45 ml per glass, cocktail version)"
+    ],
+    instructions: [
+      "Prepare the fruit: Peel and cube the dragon fruit. Peel lychees and remove pits completely.",
+      "Blend: Add dragon fruit, lychees, coconut water, lime juice, sweetener, salt, and ice to a blender.",
+      "Blend until smooth: Blend on high for 45–60 seconds until vibrant pink and silky.",
+      "Taste & adjust: Adjust sweetness or acidity if needed. Add a splash more coconut water if too thick.",
+      "Strain (optional): For an ultra-smooth juice, strain through a fine mesh sieve. For texture, serve as-is.",
+      "Serve: Pour into chilled glasses over ice. Garnish with mint, a lychee, or dragon fruit slice.",
+      "Mocktail variation: Top with sparkling water and extra lime zest.",
+      "Cocktail variation: Add rum or vodka and stir gently."
+    ],
+    related_fruit_ids: ["24", "18"],
+    image_url: "https://customer-assets.emergentagent.com/job_zip-site-clone/artifacts/kdy56ah4_ChatGPT%20Image%20Mar%201%2C%202026%2C%2004_54_05%20PM.png",
+    slug: "lychee-dragon-fruit-splash",
+    prep_time: "10 min",
+    cook_time: "0 min",
+    servings: 4,
+    difficulty: "Easy",
+    description: "A light, floral, jewel-pink drink where sweet lychee meets the mellow freshness of dragon fruit — refreshing tropical recipe at its finest."
   }
 ];
 

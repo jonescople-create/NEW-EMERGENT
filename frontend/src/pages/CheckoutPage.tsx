@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { navigate } from "../App";
 import { Breadcrumb } from "../components/Breadcrumb";
 import { BookCover } from "../components/BookCover";
@@ -9,45 +10,6 @@ import { products } from "./StorePage";
 interface Props {
   productId: string;
 }
-
-declare global {
-  interface Window {
-    paypal?: {
-      Buttons: (config: {
-        style?: Record<string, string>;
-        createOrder: (
-          _data: unknown,
-          actions: {
-            order: {
-              create: (orderData: {
-                purchase_units: Array<{
-                  description: string;
-                  amount: { currency_code: string; value: string };
-                }>;
-              }) => Promise<string>;
-            };
-          }
-        ) => Promise<string>;
-        onApprove: (
-          _data: unknown,
-          actions: {
-            order: {
-              capture: () => Promise<{
-                id: string;
-                payer?: { email_address?: string; name?: { given_name?: string } };
-              }>;
-            };
-          }
-        ) => Promise<void>;
-        onError: (err: Error) => void;
-        onCancel: () => void;
-      }) => { render: (selector: string) => Promise<void> };
-    };
-  }
-}
-
-// PayPal Client ID — LIVE for production
-const PAYPAL_CLIENT_ID = "ASXOVC-1ePvDfIm1ZGDaXy-1TGJTG_yWq5ceJewisq-96qzPyX1tZgDMJTPFebtTP-1x_hvRj2xHdvzl";
 
 // Download URLs per product
 const downloadUrls: Record<string, string> = {
@@ -80,94 +42,16 @@ export function CheckoutPage({ productId }: Props) {
   const [buyerEmail, setBuyerEmail] = useState("");
   const [email, setEmail] = useState("");
   const [agreed, setAgreed] = useState(false);
-  const [paypalLoaded, setPaypalLoaded] = useState(false);
   const [showPaypal, setShowPaypal] = useState(false);
-  const paypalRef = useRef<HTMLDivElement>(null);
-  const paypalRendered = useRef(false);
 
-  // Load PayPal SDK
-  useEffect(() => {
-    if (document.getElementById("paypal-sdk")) {
-      if (window.paypal) setPaypalLoaded(true);
-      return;
-    }
-
-    const script = document.createElement("script");
-    script.id = "paypal-sdk";
-    script.src = `https://www.paypal.com/sdk/js?client-id=${PAYPAL_CLIENT_ID}&currency=USD&intent=capture&components=buttons,funding-eligibility&enable-funding=card,paypal`;
-    script.async = true;
-    script.onload = () => setPaypalLoaded(true);
-    script.onerror = () =>
-      setOrderError("Failed to load PayPal. Please refresh and try again.");
-    document.body.appendChild(script);
-  }, []);
-
-  // Render PayPal buttons
-  useEffect(() => {
-    if (
-      !paypalLoaded ||
-      !window.paypal ||
-      !showPaypal ||
-      !paypalRef.current ||
-      !product ||
-      paypalRendered.current
-    )
-      return;
-
-    paypalRendered.current = true;
-
-    window.paypal
-      .Buttons({
-        style: {
-          layout: "vertical",
-          color: "gold",
-          shape: "rect",
-          label: "paypal",
-          height: "50",
-        },
-        createOrder: (_data: unknown, actions) => {
-          return actions.order.create({
-            purchase_units: [
-              {
-                description: product.name,
-                amount: {
-                  currency_code: "USD",
-                  value: product.price.toFixed(2),
-                },
-              },
-            ],
-          });
-        },
-        onApprove: async (_data: unknown, actions) => {
-          try {
-            const details = await actions.order.capture();
-            setOrderId(details.id);
-            setBuyerName(
-              details.payer?.name?.given_name || email.split("@")[0] || "Customer"
-            );
-            setBuyerEmail(details.payer?.email_address || email);
-            setOrderComplete(true);
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          } catch {
-            setOrderError(
-              "Payment was approved but capture failed. Please contact support with your PayPal transaction ID."
-            );
-          }
-        },
-        onError: (err: Error) => {
-          console.error("PayPal error:", err);
-          setOrderError("Something went wrong with PayPal. Please try again.");
-        },
-        onCancel: () => {
-          setOrderError("");
-        },
-      })
-      .render("#paypal-button-container");
-  }, [paypalLoaded, showPaypal, product, email]);
+  // Get PayPal Client ID from environment
+  const paypalMode = import.meta.env.VITE_PAYPAL_MODE || "SANDBOX";
+  const paypalClientId = paypalMode === "SANDBOX" 
+    ? import.meta.env.VITE_PAYPAL_CLIENT_ID_SANDBOX 
+    : import.meta.env.VITE_PAYPAL_CLIENT_ID_LIVE;
 
   // Reset on product change
   useEffect(() => {
-    paypalRendered.current = false;
     setShowPaypal(false);
     setOrderComplete(false);
     setOrderError("");
@@ -198,85 +82,44 @@ export function CheckoutPage({ productId }: Props) {
 
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
           <div className="bg-white rounded-3xl border border-gray-100 shadow-xl p-8 lg:p-12">
-            <div className="w-20 h-20 bg-leaf/10 rounded-full flex items-center justify-center mx-auto mb-6">
-              <span className="text-5xl">🎉</span>
-            </div>
-            <h1 className="font-heading text-3xl font-bold text-charcoal">
-              Thank You, {buyerName}!
-            </h1>
-            <p className="text-charcoal-light mt-3 text-lg">Your order has been processed successfully.</p>
+            <span className="text-7xl block mb-6">🎉</span>
+            <h1 className="font-heading text-3xl font-bold text-charcoal mb-4">Payment Successful!</h1>
+            <p className="text-charcoal-light mb-2">Thank you, <strong>{buyerName}</strong>!</p>
+            <p className="text-sm text-charcoal-light mb-8">Order ID: <code className="bg-gray-50 px-2 py-1 rounded">{orderId}</code></p>
 
-            {/* Order details */}
-            <div className="bg-gradient-to-br from-leaf/5 to-mango/5 rounded-2xl p-6 mt-8 text-left">
-              <h3 className="font-heading font-bold text-charcoal mb-4">📦 Order Details</h3>
-              <div className="space-y-3 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-charcoal-light">Order ID</span>
-                  <span className="font-mono font-medium text-charcoal">{orderId}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-charcoal-light">Product</span>
-                  <span className="font-medium text-charcoal">{product.name}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-charcoal-light">Amount Paid</span>
-                  <span className="font-bold text-leaf">${product.price.toFixed(2)} USD</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-charcoal-light">Email</span>
-                  <span className="font-medium text-charcoal">{buyerEmail}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-charcoal-light">Format</span>
-                  <span className="font-medium text-charcoal">PDF (Digital Download)</span>
+            <div className="bg-gradient-to-br from-leaf/5 to-mango/5 rounded-2xl p-6 mb-8 text-left">
+              <div className="flex items-start gap-4">
+                <ProductThumbnail productId={product.id} />
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-heading font-bold text-charcoal mb-1">{product.name}</h3>
+                  <p className="text-sm text-charcoal-light mb-3">PDF Digital Download</p>
+                  <a
+                    href={productDownloadUrl}
+                    download
+                    className="inline-flex items-center gap-2 bg-leaf text-white px-6 py-3 rounded-xl font-bold hover:bg-leaf-dark transition-colors shadow-md"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                    </svg>
+                    Download Now
+                  </a>
                 </div>
               </div>
             </div>
 
-            {/* Download */}
-            <div className="mt-8 bg-mango/10 rounded-2xl p-6 border border-mango/20">
-              <h3 className="font-heading font-bold text-charcoal mb-2">📥 Download Your Purchase</h3>
-              <p className="text-sm text-charcoal-light mb-4">
-                Click below to download. A copy has also been sent to {buyerEmail}.
-              </p>
-
-              {product.type === "bundle" ? (
-                <div className="space-y-3">
-                  {products.filter((p) => p.type !== "bundle").map((p) => (
-                    <a
-                      key={p.id}
-                      href={downloadUrls[p.id] || productDownloadUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-between bg-white rounded-xl p-3 border border-gray-100 hover:shadow-md transition-shadow"
-                    >
-                      <span className="text-sm font-medium text-charcoal">📄 {p.name}</span>
-                      <span className="text-leaf text-xs font-bold">Download →</span>
-                    </a>
-                  ))}
+            <div className="bg-blue-50 border border-blue-100 rounded-2xl p-6 mb-6 text-left">
+              <div className="flex items-start gap-3">
+                <span className="text-2xl">📧</span>
+                <div className="flex-1">
+                  <h3 className="font-heading font-bold text-charcoal mb-1">Check Your Email</h3>
+                  <p className="text-sm text-charcoal-light">A confirmation and download link has been sent to <strong>{buyerEmail}</strong></p>
                 </div>
-              ) : (
-                <a
-                  href={productDownloadUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-primary inline-flex items-center gap-2 text-base"
-                >
-                  📄 Download {product.name}
-                </a>
-              )}
+              </div>
             </div>
 
-            {/* Next steps */}
-            <div className="mt-8 space-y-3">
-              <p className="text-sm text-charcoal-light">
-                A receipt has been sent to your PayPal email. For support,{" "}
-                <button onClick={() => navigate("/contact")} className="text-leaf underline">contact our team</button>.
-              </p>
-              <div className="flex flex-wrap gap-3 justify-center mt-6">
-                <button onClick={() => navigate("/store")} className="btn-secondary">🛒 Continue Shopping</button>
-                <button onClick={() => navigate("/")} className="px-6 py-3 rounded-xl border border-gray-200 text-charcoal-light hover:bg-gray-50 transition-colors font-medium">🏠 Go Home</button>
-              </div>
+            <div className="space-y-3">
+              <button onClick={() => navigate("/store")} className="w-full btn-secondary">← Browse More Products</button>
+              <button onClick={() => navigate("/")} className="w-full text-charcoal-light hover:text-charcoal transition-colors">Return to Home</button>
             </div>
           </div>
         </div>
@@ -287,114 +130,64 @@ export function CheckoutPage({ productId }: Props) {
   // ===== CHECKOUT FORM =====
   return (
     <div className="animate-fade-in">
-      <div className="bg-gradient-to-r from-leaf to-leaf-light text-white py-8 lg:py-12">
+      <div className="bg-gradient-to-r from-leaf to-leaf-light text-white py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Breadcrumb items={[{ label: "Store", path: "/store" }, { label: "Checkout" }]} />
-          <div className="flex items-center gap-3">
-            <span className="text-3xl">🛒</span>
-            <h1 className="font-heading text-2xl lg:text-4xl font-bold">Secure Checkout</h1>
-          </div>
+          <h1 className="font-heading text-3xl font-bold mt-4">Secure Checkout</h1>
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid lg:grid-cols-5 gap-8">
-          {/* LEFT */}
+          {/* LEFT — Main Checkout */}
           <div className="lg:col-span-3">
-            {/* Step 1: Email */}
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-6">
-              <div className="bg-gray-50 px-6 py-4 border-b border-gray-100">
-                <h2 className="font-heading font-bold text-charcoal flex items-center gap-2">
-                  <span className="w-7 h-7 bg-leaf text-white rounded-full flex items-center justify-center text-sm">1</span>
-                  Your Email
-                </h2>
-              </div>
-              <div className="p-6">
-                <p className="text-sm text-charcoal-light mb-3">We'll send your download link and receipt to this email.</p>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => { setEmail(e.target.value); setOrderError(""); }}
-                  placeholder="your@email.com"
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-leaf focus:ring-2 focus:ring-leaf/20 outline-none transition-all"
-                />
-              </div>
-            </div>
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 lg:p-8">
+              <h2 className="font-heading text-xl font-bold text-charcoal mb-6">Complete Your Purchase</h2>
 
-            {/* Step 2: Review */}
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-6">
-              <div className="bg-gray-50 px-6 py-4 border-b border-gray-100">
-                <h2 className="font-heading font-bold text-charcoal flex items-center gap-2">
-                  <span className="w-7 h-7 bg-leaf text-white rounded-full flex items-center justify-center text-sm">2</span>
-                  Review Order
-                </h2>
-              </div>
-              <div className="p-6">
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0">
-                    <ProductThumbnail productId={product.id} />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-heading font-bold text-charcoal">{product.name}</h3>
-                    <p className="text-sm text-charcoal-light mt-1 line-clamp-2">{product.description}</p>
-                    <div className="flex items-center gap-3 mt-3">
-                      <span className="text-xs bg-leaf/10 text-leaf px-2 py-1 rounded-full font-medium uppercase">{product.type}</span>
-                      <span className="text-xs text-charcoal-light">PDF Digital Download</span>
-                    </div>
-                    {product.type === "bundle" && (
-                      <div className="mt-3 space-y-1">
-                        {products.filter((p) => p.type !== "bundle").map((p) => (
-                          <div key={p.id} className="text-xs text-charcoal-light flex items-center gap-1.5">
-                            <span className="text-leaf">✓</span> {p.name}
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                  <div className="text-right flex-shrink-0">
-                    <div className="font-heading text-2xl font-bold text-leaf">${product.price.toFixed(2)}</div>
-                    {product.originalPrice && (
-                      <div className="text-xs text-charcoal-light line-through">${product.originalPrice.toFixed(2)}</div>
-                    )}
+              {orderError && (
+                <div className="mb-6 bg-red-50 border border-red-200 rounded-xl p-4 flex items-start gap-3">
+                  <span className="text-2xl">⚠️</span>
+                  <div className="flex-1">
+                    <p className="text-sm text-red-800 font-medium">{orderError}</p>
                   </div>
                 </div>
-              </div>
-            </div>
+              )}
 
-            {/* Step 3: Pay */}
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-              <div className="bg-gray-50 px-6 py-4 border-b border-gray-100">
-                <h2 className="font-heading font-bold text-charcoal flex items-center gap-2">
-                  <span className="w-7 h-7 bg-leaf text-white rounded-full flex items-center justify-center text-sm">3</span>
-                  Payment
-                </h2>
-              </div>
-              <div className="p-6">
-                <label className="flex items-start gap-3 mb-6 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={agreed}
-                    onChange={(e) => { setAgreed(e.target.checked); setOrderError(""); }}
-                    className="mt-1 w-5 h-5 rounded border-gray-300 text-leaf focus:ring-leaf accent-[#1F7A4D]"
-                  />
-                  <span className="text-sm text-charcoal-light">
-                    I agree to the{" "}
-                    <button onClick={() => navigate("/about")} className="text-leaf underline">Terms of Service</button>{" "}and{" "}
-                    <button onClick={() => navigate("/about")} className="text-leaf underline">Privacy Policy</button>.
-                    I understand this is a digital product with instant delivery.
-                  </span>
-                </label>
-
-                {orderError && (
-                  <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-4">
-                    <p className="text-sm text-red-700 flex items-center gap-2"><span>⚠️</span>{orderError}</p>
+              {!showPaypal ? (
+                <div className="space-y-6">
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-charcoal mb-2">
+                      Email Address <span className="text-coral">*</span>
+                    </label>
+                    <input
+                      id="email"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="your@email.com"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-leaf focus:border-leaf outline-none transition-all"
+                      required
+                    />
+                    <p className="text-xs text-charcoal-light mt-2">We'll send your download link here</p>
                   </div>
-                )}
 
-                {!showPaypal ? (
+                  <div className="bg-gray-50 rounded-xl p-4">
+                    <label className="flex items-start gap-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={agreed}
+                        onChange={(e) => setAgreed(e.target.checked)}
+                        className="mt-1 w-5 h-5 text-leaf border-gray-300 rounded focus:ring-leaf"
+                      />
+                      <span className="text-sm text-charcoal-light flex-1">
+                        I agree to the <button onClick={() => navigate("/terms")} className="text-leaf hover:underline">Terms of Service</button> and <button onClick={() => navigate("/privacy")} className="text-leaf hover:underline">Privacy Policy</button>
+                      </span>
+                    </label>
+                  </div>
+
                   <button
                     onClick={() => {
-                      if (!email || !email.includes("@")) {
+                      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
                         setOrderError("Please enter a valid email address.");
                         return;
                       }
@@ -413,36 +206,81 @@ export function CheckoutPage({ productId }: Props) {
                     </svg>
                     Proceed to PayPal — ${product.price.toFixed(2)}
                   </button>
-                ) : (
-                  <div>
-                    <p className="text-sm text-charcoal-light mb-4 text-center">Complete your payment securely through PayPal:</p>
-                    {!paypalLoaded ? (
-                      <div className="text-center py-8">
-                        <span className="animate-spin text-3xl inline-block">⏳</span>
-                        <p className="text-sm text-charcoal-light mt-3">Loading PayPal...</p>
-                      </div>
-                    ) : (
-                      <div id="paypal-button-container" ref={paypalRef}></div>
-                    )}
-                    <button
-                      onClick={() => {
-                        setShowPaypal(false);
-                        paypalRendered.current = false;
-                        if (paypalRef.current) paypalRef.current.innerHTML = "";
+                </div>
+              ) : (
+                <div>
+                  <p className="text-sm text-charcoal-light mb-4 text-center">Complete your payment securely through PayPal:</p>
+                  
+                  <PayPalScriptProvider options={{ 
+                    clientId: paypalClientId,
+                    currency: "USD",
+                    intent: "capture"
+                  }}>
+                    <PayPalButtons
+                      style={{ 
+                        layout: "vertical",
+                        color: "gold",
+                        shape: "rect",
+                        label: "paypal"
                       }}
-                      className="w-full mt-4 text-sm text-charcoal-light hover:text-charcoal transition-colors text-center"
-                    >
-                      ← Go back
-                    </button>
-                  </div>
-                )}
+                      createOrder={(_data, actions) => {
+                        return actions.order.create({
+                          intent: "CAPTURE",
+                          purchase_units: [
+                            {
+                              description: product.name,
+                              amount: {
+                                currency_code: "USD",
+                                value: product.price.toFixed(2),
+                              },
+                            },
+                          ],
+                        });
+                      }}
+                      onApprove={async (_data, actions) => {
+                        try {
+                          const details = await actions.order!.capture();
+                          setOrderId(details.id);
+                          setBuyerName(
+                            details.payer?.name?.given_name || email.split("@")[0] || "Customer"
+                          );
+                          setBuyerEmail(details.payer?.email_address || email);
+                          setOrderComplete(true);
+                          window.scrollTo({ top: 0, behavior: "smooth" });
+                        } catch (error) {
+                          console.error("Payment capture error:", error);
+                          setOrderError(
+                            "Payment was approved but capture failed. Please contact support with your PayPal transaction ID."
+                          );
+                        }
+                      }}
+                      onError={(err) => {
+                        console.error("PayPal error:", err);
+                        setOrderError("Something went wrong with PayPal. Please try again.");
+                      }}
+                      onCancel={() => {
+                        setOrderError("");
+                      }}
+                    />
+                  </PayPalScriptProvider>
 
-                <div className="mt-6 pt-6 border-t border-gray-100">
-                  <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-charcoal-light">
-                    <span>🔒 256-bit SSL Encryption</span>
-                    <span>🛡️ PayPal Buyer Protection</span>
-                    <span>💯 30-Day Money Back</span>
-                  </div>
+                  <button
+                    onClick={() => {
+                      setShowPaypal(false);
+                      setOrderError("");
+                    }}
+                    className="w-full mt-4 text-sm text-charcoal-light hover:text-charcoal transition-colors text-center"
+                  >
+                    ← Go back
+                  </button>
+                </div>
+              )}
+
+              <div className="mt-6 pt-6 border-t border-gray-100">
+                <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-charcoal-light">
+                  <span>🔒 256-bit SSL Encryption</span>
+                  <span>🛡️ PayPal Buyer Protection</span>
+                  <span>💯 30-Day Money Back</span>
                 </div>
               </div>
             </div>

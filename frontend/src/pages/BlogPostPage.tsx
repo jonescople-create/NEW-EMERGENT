@@ -1,8 +1,10 @@
+import { useEffect } from "react";
 import { navigate } from "../App";
 import { getBlogPostBySlug, blogPosts } from "../data/blogPosts";
 import { getFruitBySlug } from "../data/fruits";
 import { getRecipesForFruit } from "../data/recipes";
 import { Breadcrumb } from "../components/Breadcrumb";
+import { setupPageSEO } from "../utils/seo";
 
 interface Props {
   slug: string;
@@ -10,6 +12,24 @@ interface Props {
 
 export function BlogPostPage({ slug }: Props) {
   const post = getBlogPostBySlug(slug);
+
+  useEffect(() => {
+    if (post) {
+      // Setup SEO for this blog post
+      setupPageSEO({
+        path: `/blog/${post.slug}`,
+        title: `${post.title} | IslandFruitGuide Blog`,
+        description: post.excerpt,
+        image: post.imageUrl,
+        type: 'article',
+        breadcrumbs: [
+          { name: 'Home', url: '/' },
+          { name: 'Blog', url: '/blog' },
+          { name: post.title, url: `/blog/${post.slug}` }
+        ]
+      });
+    }
+  }, [post]);
 
   if (!post) {
     return (

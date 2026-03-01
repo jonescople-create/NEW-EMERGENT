@@ -32,6 +32,8 @@ app.add_middleware(
 
 # PayPal Configuration
 PAYPAL_MODE = os.getenv("PAYPAL_MODE", "sandbox")
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3000")
+
 if PAYPAL_MODE == "sandbox":
     PAYPAL_CLIENT_ID = os.getenv("PAYPAL_CLIENT_ID_SANDBOX")
     PAYPAL_SECRET = os.getenv("PAYPAL_SECRET_SANDBOX")
@@ -46,6 +48,7 @@ paypalrestsdk.configure({
 })
 
 logger.info(f"PayPal configured in {PAYPAL_MODE} mode")
+logger.info(f"Frontend URL: {FRONTEND_URL}")
 
 
 # ==================== Models ====================

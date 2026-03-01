@@ -603,7 +603,7 @@ export const recipes: Recipe[] = [
       "Serve cold over ice, garnish with a lime wheel and mint. If making cocktails, add rum at the serving stage and stir gently."
     ],
     related_fruit_ids: ["8", "6", "10"],
-    image_url: "https://customer-assets.emergentagent.com/job_zip-site-clone/artifacts/5pje2lfc_ChatGPT%20Image%20Mar%201%2C%202026%2C%2004_44_55%20PM.png",
+    image_url: "https://customer-assets.emergentagent.com/job_zip-site-clone/artifacts/zp7n0red_A%20realistic%20photogra.png",
     slug: "papaya-passion-guava-elixir",
     prep_time: "15 min",
     cook_time: "5 min",

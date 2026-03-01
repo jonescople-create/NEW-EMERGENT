@@ -236,4 +236,56 @@
     </image:image>
   </url>
 
+  <!-- r19: Papaya-Passion-Guava Elixir -->
+  <url>
+    <loc>https://www.islandfruitguide.com/recipes/papaya-passion-guava-elixir</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://customer-assets.emergentagent.com/job_zip-site-clone/artifacts/5pje2lfc_ChatGPT%20Image%20Mar%201%2C%202026%2C%2004_44_55%20PM.png</image:loc>
+      <image:caption>Papaya-Passion-Guava Elixir (Island Trio) — Bright tropical drink with papaya, passion fruit, and guava – IslandFruitGuide</image:caption>
+      <image:title>Papaya-Passion-Guava Elixir Recipe</image:title>
+    </image:image>
+  </url>
+
+  <!-- r20: Lychee Lime Cooler -->
+  <url>
+    <loc>https://www.islandfruitguide.com/recipes/lychee-lime-cooler</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://raguzwxnrdanynjnppze.supabase.co/storage/v1/object/public/recipe-images/recipe-lychee-lime-cooler.jpeg</image:loc>
+      <image:caption>Lychee Lime Cooler — Light floral tropical drink with fresh lychees and lime – IslandFruitGuide</image:caption>
+      <image:title>Lychee Lime Cooler Recipe</image:title>
+    </image:image>
+  </url>
+
+  <!-- r21: Dragon Fruit Coconut Refresher -->
+  <url>
+    <loc>https://www.islandfruitguide.com/recipes/dragon-fruit-coconut-refresher</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://raguzwxnrdanynjnppze.supabase.co/storage/v1/object/public/recipe-images/recipe-dragon-fruit-refresher.jpeg</image:loc>
+      <image:caption>Dragon Fruit Coconut Refresher — Smooth vibrant pink tropical smoothie – IslandFruitGuide</image:caption>
+      <image:title>Dragon Fruit Coconut Refresher Recipe</image:title>
+    </image:image>
+  </url>
+
+  <!-- r22: Lychee Dragon Fruit Splash -->
+  <url>
+    <loc>https://www.islandfruitguide.com/recipes/lychee-dragon-fruit-splash</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://customer-assets.emergentagent.com/job_zip-site-clone/artifacts/kdy56ah4_ChatGPT%20Image%20Mar%201%2C%202026%2C%2004_54_05%20PM.png</image:loc>
+      <image:caption>Lychee Dragon Fruit Splash — Refreshing jewel-pink tropical recipe with lychee and dragon fruit – IslandFruitGuide</image:caption>
+      <image:title>Lychee Dragon Fruit Splash Recipe</image:title>
+    </image:image>
+  </url>
+
 </urlset>

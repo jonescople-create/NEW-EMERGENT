@@ -165,6 +165,35 @@ export const products: Product[] = [
     popular: true,
     downloadUrl: "https://image2url.com/r2/default/documents/1771979481368-df16b0ee-9819-4667-a8f2-4b3727d0f4b4.pdf",
   },
+  {
+    id: "ebook-tropical-drinks-collection",
+    name: "Tropical Drinks Collection: 4 Signature Recipes",
+    description:
+      "A beautifully curated recipe book featuring four exclusive tropical drink recipes that showcase the best of Caribbean fruit beverages. Perfect for home mixologists, health enthusiasts, and anyone who loves refreshing tropical flavors.",
+    price: 6.99,
+    originalPrice: 9.99,
+    currency: "USD",
+    type: "ebook",
+    features: [
+      "4 exclusive signature tropical drink recipes",
+      "Papaya-Passion-Guava Elixir (Island Trio)",
+      "Lychee Dragon Fruit Splash",
+      "Lychee Lime Cooler",
+      "Dragon Fruit Coconut Refresher",
+      "Professional drink photography for each recipe",
+      "Detailed ingredient lists & measurements",
+      "Step-by-step preparation instructions",
+      "Serving suggestions & variations",
+      "Mocktail and cocktail options",
+      "Nutritional information & health benefits",
+      "Tips for ingredient substitutions",
+      "Instant PDF download",
+      "Free lifetime updates",
+    ],
+    badge: "New",
+    popular: false,
+    downloadUrl: "https://image2url.com/r2/default/documents/1771979481368-df16b0ee-9819-4667-a8f2-4b3727d0f4b4.pdf",
+  },
 ];
 
 function ProductCover({ product, size = "xl" }: { product: Product; size?: "sm" | "md" | "lg" | "xl" }) {

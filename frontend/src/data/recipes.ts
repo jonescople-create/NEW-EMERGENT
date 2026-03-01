@@ -633,7 +633,7 @@ export const recipes: Recipe[] = [
       "Serve over ice, garnish with mint or lime wheel."
     ],
     related_fruit_ids: ["24"],
-    image_url: `${SUPABASE_STORAGE}/recipe-images/recipe-lychee-lime-cooler.jpeg`,
+    image_url: "https://customer-assets.emergentagent.com/job_zip-site-clone/artifacts/8pdnipct_A%20glass%20jug%20filled%20w.png",
     slug: "lychee-lime-cooler",
     prep_time: "10 min",
     cook_time: "0 min",

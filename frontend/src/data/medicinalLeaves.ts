@@ -123,7 +123,7 @@ export const medicinalLeaves: MedicinalLeaf[] = [
       "Diabetes / blood sugar medications",
       "Sedative medications (CNS depressants)"
     ],
-    image_id: null,
+    image_id: "https://raguzwxnrdanynjnppze.supabase.co/storage/v1/object/public/fruitleaf-images/fruitleaf-soursop-leaf.png",
     source_notes: "Caribbean ethnobotanical tradition. Laboratory research on annonacin published in Journal of Natural Products (1996). Neurotoxicity link documented in Movement Disorders journal (2012).",
     slug: "soursop-leaf",
     fruit_id: "3",

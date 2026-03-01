@@ -205,12 +205,12 @@ export function MedicinalLeafDetailPage({ slug }: { slug: string }) {
 
             {/* Right: Image or visual */}
             <div className="lg:w-80 flex-shrink-0">
-              {parentFruit?.image_url ? (
+              {leaf.image_id ? (
                 <div className="relative">
                   <div className="w-64 h-64 mx-auto rounded-2xl overflow-hidden border-4 border-white dark:border-gray-700 shadow-xl">
                     <OptimizedImage
-                      src={parentFruit.image_url}
-                      alt={`${leaf.common_name} from ${parentFruit.name} – IslandFruitGuide`}
+                      src={leaf.image_id}
+                      alt={`${leaf.common_name} – Caribbean medicinal leaf – IslandFruitGuide`}
                       width={256}
                       height={256}
                       className="w-full h-full object-cover"

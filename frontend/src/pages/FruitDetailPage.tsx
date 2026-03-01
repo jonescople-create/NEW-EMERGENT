@@ -8,6 +8,7 @@ import { Breadcrumb } from "../components/Breadcrumb";
 import { recordFruitView } from "../utils/personalization";
 import { isFruitFavorited, toggleFruitFavorite } from "../utils/favorites";
 import { OptimizedImage } from "../components/OptimizedImage";
+import { setupPageSEO } from "../utils/seo";
 
 interface Props {
   slug: string;
@@ -21,6 +22,20 @@ export function FruitDetailPage({ slug }: Props) {
     if (fruit) {
       recordFruitView(fruit.id);
       setFav(isFruitFavorited(fruit.id));
+      
+      // Setup SEO for this fruit page
+      setupPageSEO({
+        path: `/fruits/${fruit.slug}`,
+        title: `${fruit.name} - ${fruit.local_names[0] || 'Tropical Fruit'} | IslandFruitGuide`,
+        description: `Discover ${fruit.name}: ${fruit.description.substring(0, 150)}... Complete guide with nutritional facts, health benefits, recipes, and growing tips.`,
+        image: fruit.image_url,
+        type: 'article',
+        breadcrumbs: [
+          { name: 'Home', url: '/' },
+          { name: 'Fruits', url: '/fruits' },
+          { name: fruit.name, url: `/fruits/${fruit.slug}` }
+        ]
+      });
     }
   }, [fruit]);
 

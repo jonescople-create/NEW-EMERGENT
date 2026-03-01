@@ -85,8 +85,8 @@ async def create_paypal_order(order_request: PayPalOrderRequest):
                 "payment_method": "paypal"
             },
             "redirect_urls": {
-                "return_url": "http://localhost:3000/checkout/success",
-                "cancel_url": "http://localhost:3000/checkout/cancel"
+                "return_url": f"{FRONTEND_URL}/checkout/success",
+                "cancel_url": f"{FRONTEND_URL}/checkout/cancel"
             },
             "transactions": [{
                 "item_list": {

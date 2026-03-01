@@ -321,7 +321,7 @@ export const medicinalLeaves: MedicinalLeaf[] = [
       "Antihypertensive medications (blood pressure)",
       "Latex sensitivity"
     ],
-    image_id: null,
+    image_id: "https://raguzwxnrdanynjnppze.supabase.co/storage/v1/object/public/fruitleaf-images/fruitleaf-breadfruit-leaf.png",
     source_notes: "Caribbean ethnobotany tradition. Used extensively across Jamaica, Trinidad, and Barbados. Polynesian traditional medicine reference.",
     slug: "breadfruit-leaf",
     fruit_id: "2",

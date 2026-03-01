@@ -175,7 +175,7 @@ export const medicinalLeaves: MedicinalLeaf[] = [
       "Blood sugar medications (hypoglycemics)",
       "Anticoagulant / blood thinners"
     ],
-    image_id: null,
+    image_id: "https://raguzwxnrdanynjnppze.supabase.co/storage/v1/object/public/fruitleaf-images/fruitleaf-guava-leaf.png",
     source_notes: "Journal of Ethnopharmacology — guava leaf for digestive health. Nutrition & Metabolism (2010) — blood glucose study. Traditional Caribbean and South Asian ethnobotany.",
     slug: "guava-leaf",
     fruit_id: "10",

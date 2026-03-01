@@ -20,6 +20,13 @@ export default defineConfig({
     host: "0.0.0.0",
     port: 3000,
     strictPort: true,
+    allowedHosts: [
+      "zip-site-clone.cluster-0.preview.emergentcf.cloud",
+      "5a351083-6d30-40e0-ab79-b32042aec4a6.preview.emergentagent.com",
+      "localhost",
+      ".preview.emergentcf.cloud",
+      ".preview.emergentagent.com"
+    ],
     hmr: {
       clientPort: 3000,
     },
@@ -28,5 +35,12 @@ export default defineConfig({
     host: "0.0.0.0",
     port: 3000,
     strictPort: true,
+    allowedHosts: [
+      "zip-site-clone.cluster-0.preview.emergentcf.cloud",
+      "5a351083-6d30-40e0-ab79-b32042aec4a6.preview.emergentagent.com",
+      "localhost",
+      ".preview.emergentcf.cloud",
+      ".preview.emergentagent.com"
+    ],
   },
 });

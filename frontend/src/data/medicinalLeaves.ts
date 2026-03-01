@@ -474,7 +474,7 @@ export const medicinalLeaves: MedicinalLeaf[] = [
       "Blood sugar medications",
       "Anticoagulants"
     ],
-    image_id: null,
+    image_id: "https://raguzwxnrdanynjnppze.supabase.co/storage/v1/object/public/fruitleaf-images/fruitleaf-tamarind-leaf.png",
     source_notes: "African and Caribbean ethnobotanical tradition. Drug-tamarind interaction documented in clinical pharmacology literature (aspirin absorption increase).",
     slug: "tamarind-leaf",
     fruit_id: "12",

@@ -661,7 +661,7 @@ export const recipes: Recipe[] = [
       "Serve immediately in clear glasses to showcase color."
     ],
     related_fruit_ids: ["18"],
-    image_url: `${SUPABASE_STORAGE}/recipe-images/recipe-dragon-fruit-refresher.jpeg`,
+    image_url: "https://customer-assets.emergentagent.com/job_zip-site-clone/artifacts/gfh7nrwh_A%20Dragon%20Fruit%20Cocon.png",
     slug: "dragon-fruit-coconut-refresher",
     prep_time: "10 min",
     cook_time: "0 min",

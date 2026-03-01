@@ -696,7 +696,7 @@ export const recipes: Recipe[] = [
       "Cocktail variation: Add rum or vodka and stir gently."
     ],
     related_fruit_ids: ["24", "18"],
-    image_url: "https://customer-assets.emergentagent.com/job_zip-site-clone/artifacts/kdy56ah4_ChatGPT%20Image%20Mar%201%2C%202026%2C%2004_54_05%20PM.png",
+    image_url: "https://customer-assets.emergentagent.com/job_zip-site-clone/artifacts/agv19o8x_A%20realistic%20photogra2.png",
     slug: "lychee-dragon-fruit-splash",
     prep_time: "10 min",
     cook_time: "0 min",
